@@ -74,7 +74,7 @@ namespace MilkTeaShopping.Service.ProductService
             return Response;
         }
 
-        public async Task<APIResponse<UpdateProductResponse>> Update(CreateProductRequest updateRequest)
+        public async Task<APIResponse<UpdateProductResponse>> Update(UpdateRequest updateRequest)
         {
             APIResponse<UpdateProductResponse> response = new();
             var productId = await dbContext.Products.FirstOrDefaultAsync();

@@ -9,6 +9,6 @@ namespace MilkTeaShopping.Service.ProductService
         public Task<APIResponse<IEnumerable<GetProductResponse>>> GetAllProduct();
         public Task<APIResponse<GetProductResponse>> CreateProduct(CreateProductRequest request);
 
-        public Task<APIResponse<UpdateProductResponse>> Update(CreateProductRequest updateRequest);
+        public Task<APIResponse<UpdateProductResponse>> Update(UpdateRequest updateRequest);
     }
 }

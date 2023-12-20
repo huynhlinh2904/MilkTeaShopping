@@ -53,7 +53,7 @@ namespace MilkTeaShopping.Controllers
         }
         [HttpPut]
         [SwaggerOperation(summary: "Update Product")]
-        public async Task<IActionResult> UpdateProduct(CreateProductRequest request)
+        public async Task<IActionResult> UpdateProduct(UpdateRequest request)
         {
             try
             {
