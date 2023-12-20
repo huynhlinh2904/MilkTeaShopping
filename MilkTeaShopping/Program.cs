@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using MilkTeaShopping.Entities;
+using MilkTeaShopping.Service.ProductService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,26 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<MilkTeaShoppingContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("LocallinhConnection")));
+
+// Cors
+//builder.Services.AddCors(opt =>
+//{
+//    opt.AddPolicy("MyCors",
+//        build =>
+//        {
+//            build
+//                .AllowAnyOrigin()
+//                .AllowAnyHeader()
+//                .AllowAnyMethod();
+//        });
+//});
+
+// khai báo service
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// Mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -17,7 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("MyCors");
 app.UseAuthorization();
 
 app.MapControllers();
