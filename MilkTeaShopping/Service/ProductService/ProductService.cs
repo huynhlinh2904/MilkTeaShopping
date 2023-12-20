@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using MilkTeaShopping.Core.CoreModel;
 using MilkTeaShopping.Entities;
 using MilkTeaShopping.Models.Request.ProductRequest;
 using MilkTeaShopping.Models.Response.ProductResponse;
-using System.Security.Cryptography.Xml;
 
 namespace MilkTeaShopping.Service.ProductService
 {
@@ -72,6 +72,25 @@ namespace MilkTeaShopping.Service.ProductService
             Response.Data = result;
             Response.ToSuccessResponse(Response.Data, "lấy danh sách thành công", StatusCodes.Status200OK);
             return Response;
+        }
+
+        public async Task<APIResponse<UpdateProductResponse>> Update(UpdateRequest updateRequest)
+        {
+            APIResponse<UpdateProductResponse> response = new();
+            var productId = await dbContext.Products.FirstOrDefaultAsync();
+            if (productId == null)
+            {
+                response.ToFailedResponse("Không tìm thấy sản phẩm", StatusCodes.Status404NotFound);
+                return response;
+            }
+            Product product = new Product();
+            product.Price = updateRequest.Price;
+            await dbContext.Products.AddAsync(product);
+            await dbContext.SaveChangesAsync();
+            var map = _map.Map<GetProductResponse>(updateRequest);
+            response.ToSuccessResponse("Tạo thành công", StatusCodes.Status200OK);
+            response.Data = map;
+            return response;
         }
     }
 }

@@ -51,5 +51,23 @@ namespace MilkTeaShopping.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut]
+        [SwaggerOperation(summary: "Update Product")]
+        public async Task<IActionResult> UpdateProduct(UpdateRequest request)
+        {
+            try
+            {
+                var result = await _Product.Update(request);
+                if (result == null)
+                {
+                    return BadRequest(result?.Message);
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
