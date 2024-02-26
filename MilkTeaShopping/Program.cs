@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MilkTeaShopping.Entities;
+using MilkTeaShopping.Helper;
 using MilkTeaShopping.Service.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,9 @@ builder.Services.AddDbContext<MilkTeaShoppingContext>(option => option.UseSqlSer
 //                .AllowAnyMethod();
 //        });
 //});
+
+// khai báo cloundinay
+builder.Services.Configure<CloundinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 // khai báo service
 builder.Services.AddScoped<IProductService, ProductService>();
